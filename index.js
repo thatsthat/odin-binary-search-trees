@@ -1,3 +1,7 @@
+const Node = (value = null, left = null, right = null) => {
+  return { value, left, right };
+};
+
 const iArr = [1, 2, 3, 4, 5, 6];
 let mid = (iArr.length - (iArr.length % 2)) / 2;
 const top = iArr[mid - 1];
