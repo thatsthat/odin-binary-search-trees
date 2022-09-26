@@ -2,11 +2,14 @@ const Node = (data = null, left = null, right = null) => {
   return { data, left, right };
 };
 
-const Tree = (inpArr) => {
-  let rootNode = null;
+const Tree = (rootNode) => {
+  const insert = (inpVal) => {
+    function insVal(inVal, inNode) {}
+  };
 
   return {
     rootNode,
+    insert,
   };
 };
 
@@ -44,8 +47,9 @@ const prettyPrint = (node, prefix = "", isLeft = true) => {
 
 const nArr = [1, 5, 4, 3, 8, 34, 5, 3, 18, 31, 13, 2];
 const tree = buildTree(nArr);
-console.log(JSON.stringify(tree));
-//console.log(prettyPrint(tree));
+const myTree = Tree(tree);
+console.log(JSON.stringify(myTree.rootNode));
+//console.log(prettyPrint(myTree.rootNode));
 //console.log([...new Set(nArr.sort((a, b) => a - b))]);
 
 /* const uArr = [...new Set(nArr)];
