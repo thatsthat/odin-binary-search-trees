@@ -40,9 +40,53 @@ const Tree = (rootNode) => {
     }
   };
 
+  const find = (inpVal) => {
+    if (rootNode.data == null) {
+      rootNode = Node(inpVal);
+      return "the tree is empty";
+    }
+    if (rootNode.data == inpVal) {
+      return rootNode;
+    }
+    if (inpVal > rootNode.data) {
+      if (rootNode.right == null) {
+        return "value not found in the tree";
+      } else {
+        return findVal(inpVal, rootNode.right);
+      }
+    }
+    if (inpVal < rootNode.data) {
+      if (rootNode.left == null) {
+        return "value not found in the tree";
+      } else {
+        return findVal(inpVal, rootNode.left);
+      }
+    }
+    function findVal(inVal, inNode) {
+      if (inNode.data == inVal) {
+        return inNode;
+      }
+      if (inVal > inNode.data) {
+        if (inNode.right == null) {
+          return "value not found in the tree";
+        } else {
+          return findVal(inVal, inNode.right);
+        }
+      }
+      if (inVal < inNode.data) {
+        if (inNode.left == null) {
+          return "value not found in the tree";
+        } else {
+          return findVal(inVal, inNode.left);
+        }
+      }
+    }
+  };
+
   return {
     rootNode,
     insert,
+    find,
   };
 };
 
@@ -83,8 +127,7 @@ const tree = buildTree(nArr);
 const myTree = Tree(tree);
 //console.log(JSON.stringify(myTree.rootNode));
 console.log(prettyPrint(myTree.rootNode));
-myTree.insert(14);
-console.log(prettyPrint(myTree.rootNode));
+console.log(prettyPrint(myTree.find(3)));
 
 //console.log(prettyPrint(myTree.rootNode));
 //console.log([...new Set(nArr.sort((a, b) => a - b))]);
