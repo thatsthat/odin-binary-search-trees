@@ -4,7 +4,40 @@ const Node = (data = null, left = null, right = null) => {
 
 const Tree = (rootNode) => {
   const insert = (inpVal) => {
-    function insVal(inVal, inNode) {}
+    if (rootNode.data == null) {
+      rootNode = Node(inpVal);
+      return;
+    }
+    if (inpVal > rootNode.data) {
+      if (rootNode.right == null) {
+        rootNode.right = Node(inpVal);
+      } else {
+        insVal(inpVal, rootNode.right);
+      }
+    }
+    if (inpVal < rootNode.data) {
+      if (rootNode.left == null) {
+        rootNode.left = Node(inpVal);
+      } else {
+        insVal(inpVal, rootNode.left);
+      }
+    }
+    function insVal(inVal, inNode) {
+      if (inVal > inNode.data) {
+        if (inNode.right == null) {
+          inNode.right = Node(inVal);
+        } else {
+          insVal(inVal, inNode.right);
+        }
+      }
+      if (inVal < inNode.data) {
+        if (inNode.left == null) {
+          inNode.left = Node(inVal);
+        } else {
+          insVal(inVal, inNode.left);
+        }
+      }
+    }
   };
 
   return {
@@ -48,7 +81,11 @@ const prettyPrint = (node, prefix = "", isLeft = true) => {
 const nArr = [1, 5, 4, 3, 8, 34, 5, 3, 18, 31, 13, 2];
 const tree = buildTree(nArr);
 const myTree = Tree(tree);
-console.log(JSON.stringify(myTree.rootNode));
+//console.log(JSON.stringify(myTree.rootNode));
+console.log(prettyPrint(myTree.rootNode));
+myTree.insert(14);
+console.log(prettyPrint(myTree.rootNode));
+
 //console.log(prettyPrint(myTree.rootNode));
 //console.log([...new Set(nArr.sort((a, b) => a - b))]);
 
