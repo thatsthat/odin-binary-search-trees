@@ -127,7 +127,8 @@ const tree = buildTree(nArr);
 const myTree = Tree(tree);
 //console.log(JSON.stringify(myTree.rootNode));
 console.log(prettyPrint(myTree.rootNode));
-console.log(prettyPrint(myTree.find(3)));
+console.log(myTree.find(99));
+//console.log(prettyPrint(myTree.find(99)));
 
 //console.log(prettyPrint(myTree.rootNode));
 //console.log([...new Set(nArr.sort((a, b) => a - b))]);
