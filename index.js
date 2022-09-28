@@ -111,6 +111,26 @@ const Tree = (rootNode) => {
     }
   };
 
+  const getNextBigger = (inpNode, first = true) => {
+    if (inpNode.right == null) {
+      return null;
+    }
+    if (first) {
+      const rightBranch = inpNode.right;
+      if (rightBranch.left == null) {
+        return Node(rightBranch.data);
+      } else {
+        return getNextBigger(rightBranch.left, false);
+      }
+    } else {
+      if (inpNode.left == null) {
+        return Node(inpNode.data);
+      } else {
+        return getNextBigger(inpNode.left, false);
+      }
+    }
+  };
+
   const delNode = (inpVal) => {
     if (rootNode.data == null) {
       rootNode = Node(inpVal);
@@ -159,7 +179,7 @@ const Tree = (rootNode) => {
     insert,
     find,
     delNode,
-    getParent,
+    getNextBigger,
   };
 };
 
@@ -201,4 +221,4 @@ const tree = buildTree(nArr);
 const myTree = Tree(tree);
 
 //console.log(JSON.stringify(myTree.rootNode));
-console.log(prettyPrint(myTree.getParent(myTree.find(4))));
+console.log(prettyPrint(myTree.getNextBigger(myTree.find(31))));
