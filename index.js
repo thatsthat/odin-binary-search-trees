@@ -83,10 +83,83 @@ const Tree = (rootNode) => {
     }
   };
 
+  const getParent = (inpNode, parentNode = rootNode) => {
+    const inpVal = inpNode.data;
+    if (parentNode.data == null) {
+      return null;
+    }
+    if (inpVal == rootNode.data) {
+      return null;
+    }
+    if (inpVal > parentNode.data) {
+      if (parentNode.right == null) {
+        return null;
+      } else if (inpVal == parentNode.right.data) {
+        return parentNode;
+      } else {
+        return getParent(inpNode, parentNode.right);
+      }
+    }
+    if (inpVal < parentNode.data) {
+      if (parentNode.left == null) {
+        return null;
+      } else if (inpVal == parentNode.left.data) {
+        return parentNode;
+      } else {
+        return getParent(inpNode, parentNode.left);
+      }
+    }
+  };
+
+  const delNode = (inpVal) => {
+    if (rootNode.data == null) {
+      rootNode = Node(inpVal);
+      return "the tree is empty";
+    }
+    if (rootNode.data == inpVal) {
+      return rootNode; // Delete this node
+    }
+    if (inpVal > rootNode.data) {
+      if (rootNode.right == null) {
+        return "value not found in the tree";
+      } else {
+        return delVal(inpVal, rootNode.right);
+      }
+    }
+    if (inpVal < rootNode.data) {
+      if (rootNode.left == null) {
+        return "value not found in the tree";
+      } else {
+        return delVal(inpVal, rootNode.left);
+      }
+    }
+    function delVal(inVal, inNode) {
+      if (inNode.data == inVal) {
+        return inNode; // Delete this node
+      }
+      if (inVal > inNode.data) {
+        if (inNode.right == null) {
+          return "value not found in the tree";
+        } else {
+          return delVal(inVal, inNode.right);
+        }
+      }
+      if (inVal < inNode.data) {
+        if (inNode.left == null) {
+          return "value not found in the tree";
+        } else {
+          return delVal(inVal, inNode.left);
+        }
+      }
+    }
+  };
+
   return {
     rootNode,
     insert,
     find,
+    delNode,
+    getParent,
   };
 };
 
@@ -123,20 +196,9 @@ const prettyPrint = (node, prefix = "", isLeft = true) => {
 };
 
 const nArr = [1, 5, 4, 3, 8, 34, 5, 3, 18, 31, 13, 2];
+//console.log([...new Set(nArr.sort((a, b) => a - b))]);
 const tree = buildTree(nArr);
 const myTree = Tree(tree);
+
 //console.log(JSON.stringify(myTree.rootNode));
-console.log(prettyPrint(myTree.rootNode));
-console.log(myTree.find(99));
-//console.log(prettyPrint(myTree.find(99)));
-
-//console.log(prettyPrint(myTree.rootNode));
-//console.log([...new Set(nArr.sort((a, b) => a - b))]);
-
-/* const uArr = [...new Set(nArr)];
-const iArr = uArr.sort((a, b) => a - b);
-const mid = (iArr.length - (iArr.length % 2)) / 2;
-const top = iArr[mid];
-const left = iArr.slice(0, mid);
-const right = iArr.slice(mid + 1);
-console.log(left, top, right); */
+console.log(prettyPrint(myTree.getParent(myTree.find(4))));
