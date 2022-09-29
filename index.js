@@ -142,6 +142,25 @@ const Tree = (rootNode) => {
         parentNode.right = null;
       }
     }
+    // If node has only one child branch, connect that branch to parent
+    if (
+      (nodeToDel.right == null && nodeToDel.left !== null) ||
+      (nodeToDel.left == null && nodeToDel.right !== null)
+    ) {
+      if (inpVal < parentNode.data) {
+        if (nodeToDel.left == null) {
+          parentNode.left = nodeToDel.right;
+        } else {
+          parentNode.left = nodeToDel.left;
+        }
+      } else {
+        if (nodeToDel.left == null) {
+          parentNode.right = nodeToDel.right;
+        } else {
+          parentNode.right = nodeToDel.left;
+        }
+      }
+    }
   };
 
   return {
@@ -191,7 +210,6 @@ const myTree = Tree(tree);
 
 //console.log(JSON.stringify(myTree.rootNode));
 console.log(prettyPrint(myTree.rootNode));
-myTree.delNode(5);
-myTree.delNode(2);
-myTree.delNode(18);
+myTree.delNode(1);
+myTree.delNode(13);
 console.log(prettyPrint(myTree.rootNode));
