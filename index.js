@@ -118,13 +118,13 @@ const Tree = (rootNode) => {
     if (first) {
       const rightBranch = inpNode.right;
       if (rightBranch.left == null) {
-        return Node(rightBranch.data);
+        return rightBranch.data;
       } else {
         return getNextBigger(rightBranch.left, false);
       }
     } else {
       if (inpNode.left == null) {
-        return Node(inpNode.data);
+        return inpNode.data;
       } else {
         return getNextBigger(inpNode.left, false);
       }
@@ -143,7 +143,7 @@ const Tree = (rootNode) => {
       }
     }
     // If node has only one child branch, connect that branch to parent
-    if (
+    else if (
       (nodeToDel.right == null && nodeToDel.left !== null) ||
       (nodeToDel.left == null && nodeToDel.right !== null)
     ) {
@@ -160,6 +160,12 @@ const Tree = (rootNode) => {
           parentNode.right = nodeToDel.left;
         }
       }
+    }
+    // If node has both left and right
+    else {
+      const nextBiggerVal = getNextBigger(nodeToDel);
+      delNode(nextBiggerVal);
+      nodeToDel.data = nextBiggerVal;
     }
   };
 
@@ -210,6 +216,5 @@ const myTree = Tree(tree);
 
 //console.log(JSON.stringify(myTree.rootNode));
 console.log(prettyPrint(myTree.rootNode));
-myTree.delNode(1);
-myTree.delNode(13);
+myTree.delNode(8);
 console.log(prettyPrint(myTree.rootNode));
