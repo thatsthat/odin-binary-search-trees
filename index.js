@@ -132,44 +132,14 @@ const Tree = (rootNode) => {
   };
 
   const delNode = (inpVal) => {
-    if (rootNode.data == null) {
-      rootNode = Node(inpVal);
-      return "the tree is empty";
-    }
-    if (rootNode.data == inpVal) {
-      return rootNode; // Delete this node
-    }
-    if (inpVal > rootNode.data) {
-      if (rootNode.right == null) {
-        return "value not found in the tree";
+    const nodeToDel = find(inpVal);
+    const parentNode = getParent(nodeToDel);
+    // If no children, simply remove the node from parent
+    if (nodeToDel.right == null && nodeToDel.left == null) {
+      if (inpVal < parentNode.data) {
+        parentNode.left = null;
       } else {
-        return delVal(inpVal, rootNode.right);
-      }
-    }
-    if (inpVal < rootNode.data) {
-      if (rootNode.left == null) {
-        return "value not found in the tree";
-      } else {
-        return delVal(inpVal, rootNode.left);
-      }
-    }
-    function delVal(inVal, inNode) {
-      if (inNode.data == inVal) {
-        return inNode; // Delete this node
-      }
-      if (inVal > inNode.data) {
-        if (inNode.right == null) {
-          return "value not found in the tree";
-        } else {
-          return delVal(inVal, inNode.right);
-        }
-      }
-      if (inVal < inNode.data) {
-        if (inNode.left == null) {
-          return "value not found in the tree";
-        } else {
-          return delVal(inVal, inNode.left);
-        }
+        parentNode.right = null;
       }
     }
   };
@@ -179,7 +149,6 @@ const Tree = (rootNode) => {
     insert,
     find,
     delNode,
-    getNextBigger,
   };
 };
 
@@ -221,4 +190,8 @@ const tree = buildTree(nArr);
 const myTree = Tree(tree);
 
 //console.log(JSON.stringify(myTree.rootNode));
-console.log(prettyPrint(myTree.getNextBigger(myTree.find(31))));
+console.log(prettyPrint(myTree.rootNode));
+myTree.delNode(5);
+myTree.delNode(2);
+myTree.delNode(18);
+console.log(prettyPrint(myTree.rootNode));
