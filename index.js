@@ -169,7 +169,7 @@ const Tree = (rootNode) => {
     }
   };
 
-  const levelOrder = () => {
+  const levelOrder = (inpFunct) => {
     let treeBuffer = [];
     let outArr = [];
     treeBuffer.push(rootNode);
@@ -188,7 +188,7 @@ const Tree = (rootNode) => {
       outArr.push(currNode.data);
       lOrder();
     }
-    return outArr;
+    return outArr.map(inpFunct);
   };
 
   return {
@@ -239,4 +239,8 @@ const myTree = Tree(tree);
 
 //console.log(JSON.stringify(myTree.rootNode));
 console.log(prettyPrint(myTree.rootNode));
-console.log(myTree.levelOrder());
+console.log(
+  myTree.levelOrder((a) => {
+    return 2 * a;
+  })
+);
