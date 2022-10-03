@@ -169,11 +169,34 @@ const Tree = (rootNode) => {
     }
   };
 
+  const levelOrder = () => {
+    let treeBuffer = [];
+    let outArr = [];
+    treeBuffer.push(rootNode);
+    lOrder();
+    function lOrder() {
+      if (treeBuffer.length == 0) {
+        return;
+      }
+      const currNode = treeBuffer.shift();
+      if (currNode.left !== null) {
+        treeBuffer.push(currNode.left);
+      }
+      if (currNode.right !== null) {
+        treeBuffer.push(currNode.right);
+      }
+      outArr.push(currNode.data);
+      lOrder();
+    }
+    return outArr;
+  };
+
   return {
     rootNode,
     insert,
     find,
     delNode,
+    levelOrder,
   };
 };
 
@@ -184,7 +207,7 @@ function buildTree(inpArr) {
   const sortArr = noDups.sort((a, b) => a - b);
 
   if (sortArr.length == 1) {
-    return Node(sortArr);
+    return Node(sortArr[0]);
   }
 
   if (sortArr.length == 2) {
@@ -216,5 +239,4 @@ const myTree = Tree(tree);
 
 //console.log(JSON.stringify(myTree.rootNode));
 console.log(prettyPrint(myTree.rootNode));
-myTree.delNode(8);
-console.log(prettyPrint(myTree.rootNode));
+console.log(myTree.levelOrder());
