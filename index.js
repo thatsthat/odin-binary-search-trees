@@ -191,12 +191,41 @@ const Tree = (rootNode) => {
     return outArr.map(inpFunct);
   };
 
+  const inOrder = (inpFunct) => {
+    let treeBuffer = [];
+    let outArr = [];
+    // Always start with root node
+    treeBuffer.push(rootNode);
+    iOrder();
+    function iOrder() {
+      if (treeBuffer.length == 0) {
+        return;
+      }
+      // In this case it's a stack (FIFO)
+      const currNode = treeBuffer.pop();
+      // 1. Try to go deeper into left
+      if (currNode.left !== null) {
+        treeBuffer.push(currNode.left);
+        iOrder();
+      }
+      // 2. Process 'data'
+      outArr.push(currNode.data);
+      // 3. Try to go deeper into right
+      if (currNode.right !== null) {
+        treeBuffer.push(currNode.right);
+        iOrder();
+      }
+    }
+    return outArr.map(inpFunct);
+  };
+
   return {
     rootNode,
     insert,
     find,
     delNode,
     levelOrder,
+    inOrder,
   };
 };
 
@@ -240,7 +269,7 @@ const myTree = Tree(tree);
 //console.log(JSON.stringify(myTree.rootNode));
 console.log(prettyPrint(myTree.rootNode));
 console.log(
-  myTree.levelOrder((a) => {
-    return 2 * a;
+  myTree.inOrder((a) => {
+    return a;
   })
 );
