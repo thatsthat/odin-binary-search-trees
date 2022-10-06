@@ -275,6 +275,38 @@ const Tree = (rootNode) => {
     return outArr.map(inpFunct);
   };
 
+  const height = (inpVal) => {
+    let pathHeight = [];
+    const inpNode = find(inpVal);
+    let counter = 0;
+    nHeigh(inpNode, counter);
+    return Math.max(...pathHeight);
+    function nHeigh(iNode, counter) {
+      if (iNode.left !== null) {
+        nHeigh(iNode.left, counter + 1);
+      }
+      if (iNode.right !== null) {
+        nHeigh(iNode.right, counter + 1);
+      }
+      if (iNode.left == null && iNode.right == null) {
+        pathHeight.push(counter);
+      }
+    }
+  };
+
+  const depth = (inpVal) => {
+    let counter = 0;
+    const inpNode = find(inpVal);
+    return nDepth(inpNode, counter);
+    function nDepth(iNode, counter) {
+      if (iNode == rootNode) {
+        return counter;
+      } else {
+        return nDepth(getParent(iNode), counter + 1);
+      }
+    }
+  };
+
   return {
     rootNode,
     insert,
@@ -284,6 +316,8 @@ const Tree = (rootNode) => {
     inOrder,
     preOrder,
     postOrder,
+    height,
+    depth,
   };
 };
 
@@ -326,8 +360,9 @@ const myTree = Tree(tree);
 
 //console.log(JSON.stringify(myTree.rootNode));
 console.log(prettyPrint(myTree.rootNode));
-console.log(
+/* console.log(
   myTree.postOrder((a) => {
     return a;
   })
-);
+); */
+console.log(myTree.depth(13));
