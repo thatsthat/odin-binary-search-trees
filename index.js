@@ -279,14 +279,14 @@ const Tree = (rootNode) => {
     let pathHeight = [];
     const inpNode = find(inpVal);
     let counter = 0;
-    nHeigh(inpNode, counter);
+    nHeight(inpNode, counter);
     return Math.max(...pathHeight);
-    function nHeigh(iNode, counter) {
+    function nHeight(iNode, counter) {
       if (iNode.left !== null) {
-        nHeigh(iNode.left, counter + 1);
+        nHeight(iNode.left, counter + 1);
       }
       if (iNode.right !== null) {
-        nHeigh(iNode.right, counter + 1);
+        nHeight(iNode.right, counter + 1);
       }
       if (iNode.left == null && iNode.right == null) {
         pathHeight.push(counter);
@@ -307,6 +307,30 @@ const Tree = (rootNode) => {
     }
   };
 
+  const isBalanced = (inpNode) => {
+    const nodesBalanced = levelOrder(nBalanced);
+    console.log(nodesBalanced);
+    return nodesBalanced.every((v) => v === true);
+
+    function nBalanced(inpVal) {
+      const iNode = find(inpVal);
+      let rHeight = 0;
+      let lHeight = 0;
+      if (iNode.right !== null) {
+        rHeight = height(iNode.right.data);
+      }
+      if (iNode.left !== null) {
+        lHeight = height(iNode.left.data);
+      }
+      console.log(lHeight, rHeight);
+      if (Math.abs(rHeight - lHeight) > 1) {
+        return false;
+      } else {
+        return true;
+      }
+    }
+  };
+
   return {
     rootNode,
     insert,
@@ -318,6 +342,7 @@ const Tree = (rootNode) => {
     postOrder,
     height,
     depth,
+    isBalanced,
   };
 };
 
@@ -359,10 +384,15 @@ const tree = buildTree(nArr);
 const myTree = Tree(tree);
 
 //console.log(JSON.stringify(myTree.rootNode));
-console.log(prettyPrint(myTree.rootNode));
+//console.log(prettyPrint(myTree.rootNode));
 /* console.log(
   myTree.postOrder((a) => {
     return a;
   })
 ); */
-console.log(myTree.depth(13));
+//console.log(myTree.depth(13));
+//console.log(myTree.isBalanced());
+myTree.insert(19);
+console.log(prettyPrint(myTree.rootNode));
+console.log(myTree.isBalanced());
+//console.log(myTree.height(8));
