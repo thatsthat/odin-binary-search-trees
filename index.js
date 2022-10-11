@@ -307,9 +307,8 @@ const Tree = (rootNode) => {
     }
   };
 
-  const isBalanced = (inpNode) => {
+  const isBalanced = () => {
     const nodesBalanced = levelOrder(nBalanced);
-    console.log(nodesBalanced);
     return nodesBalanced.every((v) => v === true);
 
     function nBalanced(inpVal) {
@@ -317,18 +316,28 @@ const Tree = (rootNode) => {
       let rHeight = 0;
       let lHeight = 0;
       if (iNode.right !== null) {
-        rHeight = height(iNode.right.data);
+        rHeight = 1 + height(iNode.right.data);
       }
       if (iNode.left !== null) {
-        lHeight = height(iNode.left.data);
+        lHeight = 1 + height(iNode.left.data);
       }
-      console.log(lHeight, rHeight);
+      console.log(inpVal, lHeight, rHeight);
       if (Math.abs(rHeight - lHeight) > 1) {
         return false;
       } else {
         return true;
       }
     }
+  };
+
+  const rebalance = () => {
+    const treeValues = inOrder((a) => a);
+    //console.log(prettyPrint(rootNode));
+    const bTree = buildTree(treeValues);
+    rootNode.data = bTree.data;
+    rootNode.left = bTree.left;
+    rootNode.right = bTree.right;
+    //console.log(prettyPrint(rootNode));
   };
 
   return {
@@ -343,6 +352,7 @@ const Tree = (rootNode) => {
     height,
     depth,
     isBalanced,
+    rebalance,
   };
 };
 
@@ -392,7 +402,21 @@ const myTree = Tree(tree);
 ); */
 //console.log(myTree.depth(13));
 //console.log(myTree.isBalanced());
+//console.log(prettyPrint(myTree.rootNode));
+//console.log(myTree.isBalanced());
 myTree.insert(19);
+myTree.insert(20);
+myTree.insert(21);
+myTree.insert(22);
+//console.log(prettyPrint(myTree.rootNode));
+//console.log(myTree.isBalanced());
+//console.log(myTree.isBalanced());
+//console.log(myTree.height(8));
+myTree.rebalance();
+//console.log(prettyPrint(myTree.rootNode));
+//console.log(myTree.isBalanced());
+myTree.insert(35);
 console.log(prettyPrint(myTree.rootNode));
 console.log(myTree.isBalanced());
-//console.log(myTree.height(8));
+//console.log(prettyPrint(myTree.rootNode));
+//console.log(myTree.isBalanced());
